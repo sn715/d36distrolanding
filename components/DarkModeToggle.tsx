@@ -42,7 +42,7 @@ export const DarkModeToggle: React.FC = () => {
     return (
       <button
         aria-label="Toggle dark mode"
-        className="h-7 w-7 cursor-default rounded-full border border-black/20 bg-white/60 dark:border-white/20 dark:bg-black/40"
+        className="h-9 w-9 shrink-0 cursor-default rounded-full border border-black/25 bg-white/70 dark:border-white/40 dark:bg-black/40"
       />
     );
   }
@@ -52,7 +52,7 @@ export const DarkModeToggle: React.FC = () => {
       type="button"
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="flex h-7 w-7 items-center justify-center rounded-full border border-black/25 bg-white/60 text-[0.65rem] font-medium text-black/80 hover:border-black hover:bg-white dark:border-white/30 dark:bg-black/40 dark:text-white/90 dark:hover:border-white dark:hover:bg-black/60"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/25 bg-white/70 text-[0.65rem] font-medium text-black/80 transition hover:border-black hover:bg-white dark:border-white/40 dark:bg-black/40 dark:text-white/90 dark:hover:border-white dark:hover:bg-black/60"
     >
       {isDark ? "☾" : "☼"}
     </button>

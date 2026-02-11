@@ -9,17 +9,27 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+:root {
+  /* Match this to the logo cutout width; change in one place to keep text/CTA aligned */
+  --logo-width: 80vw;
+}
+
+html {
   height: 100%;
+  overflow: hidden;
 }
 
 body {
+  height: 100%;
+  overflow: hidden;
   @apply antialiased;
 }
 
 main {
+  height: 100vh;
   min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 /* Smooth theme transitions */
