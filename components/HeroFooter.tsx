@@ -40,39 +40,38 @@ export const HeroFooter: FC<HeroFooterProps> = ({
           )}
         </div>
 
-        {/* Right: CTA aligned with logo right edge, same baseline */}
-        <div className="flex shrink-0 flex-col items-end gap-3 md:flex-row md:items-center">
+        {/* Right: CTA in one row (Enter / Enter Platform, IG, mode toggle) */}
+        <div className="flex shrink-0 flex-row items-center gap-2">
           <a
             href={platformUrl}
             id="platform"
-            className="font-univers inline-flex items-center justify-center rounded-full border border-black/30 bg-white/70 px-6 py-2 text-xs font-medium uppercase tracking-[0.25em] text-black backdrop-blur-sm transition hover:border-black hover:bg-white md:text-[0.7rem] dark:border-white/40 dark:bg-white/10 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+            className="font-univers inline-flex shrink-0 items-center justify-center rounded-full border border-black/30 bg-white/70 px-4 py-2 text-xs font-medium uppercase tracking-[0.25em] text-black backdrop-blur-sm transition hover:border-black hover:bg-white md:px-6 md:text-[0.7rem] dark:border-white/40 dark:bg-white/10 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
           >
-            Enter Platform
+            <span className="md:hidden">Enter</span>
+            <span className="hidden md:inline">Enter Platform</span>
           </a>
-          <div className="flex items-center gap-2">
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Visit D36 Distribution on Instagram"
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/25 bg-white/70 text-black/70 backdrop-blur-sm transition hover:border-black hover:text-black dark:border-white/40 dark:bg-black/40 dark:text-white/80 dark:hover:border-white dark:hover:text-white"
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Visit D36 Distribution on Instagram"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/25 bg-white/70 text-black/70 backdrop-blur-sm transition hover:border-black hover:text-black dark:border-white/40 dark:bg-black/40 dark:text-white/80 dark:hover:border-white dark:hover:text-white"
+          >
+            <span className="sr-only">Instagram</span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
             >
-              <span className="sr-only">Instagram</span>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17" cy="7" r="0.8" fill="currentColor" />
-              </svg>
-            </a>
-            <DarkModeToggle />
-          </div>
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17" cy="7" r="0.8" fill="currentColor" />
+            </svg>
+          </a>
+          <DarkModeToggle />
         </div>
       </div>
     </div>
