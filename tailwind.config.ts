@@ -17,7 +17,16 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        univers: ["var(--font-univers)", "system-ui", "sans-serif"]
+        univers: ["var(--font-univers)", "system-ui", "sans-serif"],
+        // System Helvetica stack (uses Helvetica/Helvetica Neue if available)
+        helvetica: [
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "system-ui",
+          "sans-serif"
+        ],
+        ppeditorial: ["var(--font-ppeditorial)", "serif"]
       }
     }
   },

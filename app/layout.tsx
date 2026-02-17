@@ -15,6 +15,12 @@ const univers = localFont({
   variable: "--font-univers"
 });
 
+const ppEditorialNew = localFont({
+  src: "../public/fonts/Editorial New/PPEditorialNew-Regular.otf",
+  display: "swap",
+  variable: "--font-ppeditorial"
+});
+
 export const metadata: Metadata = {
   title: "D36 Distribution",
   description:
@@ -46,7 +52,7 @@ export default function RootLayout(props: { children: ReactNode }) {
         />
       </head>
       <body
-        className={`${inter.className} ${univers.variable} theme-transition bg-white text-black antialiased dark:bg-black dark:text-white font-sans`}
+        className={`${inter.className} ${univers.variable} ${ppEditorialNew.variable} theme-transition bg-white text-black antialiased dark:bg-black dark:text-white font-sans`}
       >
         {props.children}
       </body>

@@ -13,14 +13,14 @@ type HeroFooterProps = {
  */
 export const HeroFooter: FC<HeroFooterProps> = ({
   subtitle,
-  platformUrl = "https://platform.d36distro.com",
+  platformUrl = "https://portal.d36distro.com/",
   instagramHandle = "d36world"
 }) => {
   const instagramUrl = `https://www.instagram.com/${instagramHandle}/`;
 
   return (
     <div
-      className="pointer-events-none absolute left-0 right-0 bottom-4 px-3 pb-[env(safe-area-inset-bottom)] md:bottom-8 md:px-0 animate-fade-in-up"
+      className="pointer-events-none absolute left-0 right-0 bottom-8 px-3 pb-[env(safe-area-inset-bottom)] md:bottom-12 md:px-0 animate-fade-in-up"
       style={{ animationDelay: "0.4s" }}
     >
       {/* Same width as logo, centered; change --logo-width in globals.css to match logo */}
@@ -30,7 +30,7 @@ export const HeroFooter: FC<HeroFooterProps> = ({
       >
         {/* Left: text aligned with logo left edge */}
         <div className="flex flex-col gap-1 text-left">
-          <h1 className="font-univers text-base font-normal tracking-tight text-black drop-shadow-sm md:text-lg lg:text-xl dark:text-white">
+          <h1 className="font-helvetica font-light tracking-tight text-black drop-shadow-sm text-xl md:text-2xl lg:text-3xl dark:text-white">
             D36 DISTRIBUTION
           </h1>
           {subtitle && (
