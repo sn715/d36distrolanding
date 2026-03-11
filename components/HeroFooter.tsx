@@ -45,6 +45,7 @@ export const HeroFooter: FC<HeroFooterProps> = ({
           <a
             href={platformUrl}
             id="platform"
+            target="_self"
             className="font-univers inline-flex shrink-0 items-center justify-center rounded-full border border-black/30 bg-white/70 px-4 py-2 text-xs font-medium uppercase tracking-[0.25em] text-black backdrop-blur-sm transition hover:border-black hover:bg-white md:px-6 md:text-[0.7rem] dark:border-white/40 dark:bg-white/10 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
           >
             <span className="md:hidden">Enter</span>
