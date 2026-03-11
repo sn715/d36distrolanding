@@ -7,7 +7,6 @@ export default function HomePage() {
       <BackgroundCarousel
         videoSrc="/videos/renao.mp4"
         videoSources={[
-          "/videos/hannan.mp4",
           "/videos/renao.mp4",
           "/videos/zayn.mp4",
           "/videos/rahul.mp4",
