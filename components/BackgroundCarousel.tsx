@@ -1,23 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type BackgroundCarouselProps = {
-  /**
-   * Fallback video source if no `videoSources` array is provided.
-   */
   videoSrc: string;
-  /**
-   * Optional list of videos to randomly choose from on initial load.
-   * A single item will behave like `videoSrc`.
-   */
   videoSources?: string[];
-  /**
-   * Scales the video behind the mask without changing mask size.
-   * Increase to "zoom in" so footage reaches letter edges.
-   */
   videoScale?: number;
-  /** CSS object-position value (e.g. "center", "50% 40%"). */
   videoObjectPosition?: string;
 };
 
@@ -26,19 +14,51 @@ export const BackgroundCarousel = (props: BackgroundCarouselProps) => {
   const objectPosition = props.videoObjectPosition ?? "center";
   const hasVideoList =
     Array.isArray(props.videoSources) && props.videoSources.length > 0;
-  const length = hasVideoList && props.videoSources ? props.videoSources.length : 1;
-  // Use 0 on first render so server and client match (avoids hydration error).
-  // After mount, pick a random video so each full load gets a different one.
-  const [randomIndex, setRandomIndex] = useState(0);
-  useEffect(() => {
-    if (hasVideoList && length > 0) setRandomIndex(Math.floor(Math.random() * length));
-  }, [hasVideoList, length]);
-  const chosenVideoSrc =
-    hasVideoList && props.videoSources
-      ? props.videoSources[randomIndex]
-      : props.videoSrc;
+  const length =
+    hasVideoList && props.videoSources ? props.videoSources.length : 1;
 
-  const isMov = /\.mov$/i.test(chosenVideoSrc);
+  const [randomIndex, setRandomIndex] = useState(0);
+  const [src, setSrc] = useState(props.videoSrc);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Pick random video after mount (avoids hydration mismatch)
+  useEffect(() => {
+    if (hasVideoList && props.videoSources && length > 0) {
+      const idx = Math.floor(Math.random() * length);
+      setRandomIndex(idx);
+      setSrc(props.videoSources[idx]);
+    } else {
+      setSrc(props.videoSrc);
+    }
+  }, [hasVideoList, length]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Programmatically play whenever src changes — required for mobile browsers
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Reset and reload so the new src is picked up without remounting
+    video.load();
+
+    const tryPlay = () => {
+      video.play().catch(() => {
+        // Autoplay blocked — silently ignore; the video stays paused
+      });
+    };
+
+    // Some browsers fire canplay synchronously, others asynchronously
+    if (video.readyState >= 3) {
+      tryPlay();
+    } else {
+      video.addEventListener("canplay", tryPlay, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener("canplay", tryPlay);
+    };
+  }, [src]);
+
+  const isMov = /\.mov$/i.test(src);
   const sourceType = isMov ? "video/quicktime" : "video/mp4";
 
   return (
@@ -48,21 +68,24 @@ export const BackgroundCarousel = (props: BackgroundCarouselProps) => {
         style={{ width: "var(--logo-width)" }}
       >
         <video
-          key={chosenVideoSrc}
+          ref={videoRef}
+          // NO key prop — avoids remounting which breaks mobile autoplay
           className="h-full w-full object-cover origin-center transform-gpu"
           autoPlay
           muted
           loop
           playsInline
+          // Needed for older iOS Safari
+          {...({ "webkit-playsinline": "true" } as Record<string, string>)}
+          preload="auto"
           style={{
             transform: `scale(${scale})`,
-            objectPosition
+            objectPosition,
           }}
         >
-          <source src={chosenVideoSrc} type={sourceType} />
+          <source src={src} type={sourceType} />
         </video>
       </div>
     </div>
   );
 };
-
