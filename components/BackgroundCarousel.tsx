@@ -42,7 +42,7 @@ export const BackgroundCarousel = (props: BackgroundCarouselProps) => {
   const sourceType = isMov ? "video/quicktime" : "video/mp4";
 
   return (
-    <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center bg-white dark:bg-black">
+    <div className="absolute inset-0 -z-10 flex items-center justify-center bg-white dark:bg-black">
       <div
         className="relative aspect-[4/1] overflow-hidden logo-video-mask"
         style={{ width: "var(--logo-width)" }}
