@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type BackgroundCarouselProps = {
   /**
@@ -22,6 +22,7 @@ type BackgroundCarouselProps = {
 };
 
 export const BackgroundCarousel = (props: BackgroundCarouselProps) => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const scale = props.videoScale ?? 1.22;
   const objectPosition = props.videoObjectPosition ?? "center";
   const hasVideoList =
@@ -41,6 +42,23 @@ export const BackgroundCarousel = (props: BackgroundCarouselProps) => {
   const isMov = /\.mov$/i.test(chosenVideoSrc);
   const sourceType = isMov ? "video/quicktime" : "video/mp4";
 
+  const attemptPlay = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    // Some mobile browsers won't honor autoplay reliably without an explicit play().
+    // This is safe because we're muted + playsInline.
+    const p = el.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    // Ensure the new src is loaded, then try to play.
+    el.load();
+    attemptPlay();
+  }, [chosenVideoSrc, attemptPlay]);
+
   return (
     <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center bg-white dark:bg-black">
       <div
@@ -49,11 +67,15 @@ export const BackgroundCarousel = (props: BackgroundCarouselProps) => {
       >
         <video
           key={chosenVideoSrc}
+          ref={videoRef}
           className="h-full w-full object-cover origin-center transform-gpu"
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          controls={false}
+          onCanPlay={attemptPlay}
           style={{
             transform: `scale(${scale})`,
             objectPosition
